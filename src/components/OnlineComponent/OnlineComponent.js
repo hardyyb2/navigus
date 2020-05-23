@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import AvatarGroup from '@atlaskit/avatar-group'
-// import { getAdorableAvatar } from '@atlaskit/avatar-group/examples-util/data.ts'
+// import AvatarGroup from '@atlaskit/avatar-group'
+import Tooltip from '@material-ui/core/Tooltip';
+
+import { getAdorableAvatar } from '../../UI/AdorableAvatar/AdorableAvatar'
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
 const ChatComponent = ({ totalClients }) => {
     return totalClients.length !== 0 ?
@@ -16,22 +20,17 @@ const ChatComponent = ({ totalClients }) => {
         null
 }
 
-const ChatList = ({ clients }) => {
-    const data = clients.map(client => ({
-        ...client,
-        appearance: 'circle',
-        enableTooltip: true,
-        size: 'medium',
-        // src: getAdorableAvatar(client),
-        // status: getStatus(),
-    }))
-    return <AvatarGroup
-        appearance="stack"
-        onAvatarClick={console.log}
-        data={data}
-        size="large"
-    />
-};
+const ChatList = ({ clients }) => (
+    <AvatarGroup max={8}>
+        {
+            clients.map((client, index) =>
+                <Tooltip title={client.email} key={index}>
+                    <Avatar alt={client.email} src={getAdorableAvatar(client.email)} />
+                </Tooltip>
+            )
+        }
+    </AvatarGroup>
+)
 
 const mapStateToProps = state => {
     return {
