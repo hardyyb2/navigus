@@ -7,12 +7,12 @@ import { verifyAuth } from "./actions";
 import rootReducer from "./reducers";
 
 
-const persistConfig = {
-    key: 'products',
-    storage: storage,
-    whitelist: ['products', 'auth', 'user'] // which reducer want to store
-};
-const pReducer = persistReducer(persistConfig, rootReducer);
+// const persistConfig = {
+//     key: 'navigus',
+//     storage: storage,
+//     whitelist: ['auth', 'users'] // which reducer want to store
+// };
+// const pReducer = persistReducer(persistConfig, rootReducer);
 
 export default function configureStore(persistedState) {
     const composeEnhancers =
@@ -21,16 +21,16 @@ export default function configureStore(persistedState) {
             window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
             }) : compose;
     const enhancer = composeEnhancers(
-        applyMiddleware(thunkMiddleware, logger),
+        applyMiddleware(thunkMiddleware),
     );
 
     const store = createStore(
-        pReducer,
+        rootReducer,
         persistedState,
         enhancer
     );
 
-    const persistor = persistStore(store);
+    // const persistor = persistStore(store);
     store.dispatch(verifyAuth());
     return store;
 }
