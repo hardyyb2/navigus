@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {
     makeStyles, useTheme, fade, Drawer, AppBar, Toolbar,
     List, CssBaseline, Typography, IconButton, Divider, ListItem,
-    ListItemText, ListItemIcon,
+    ListItemText, ListItemIcon, Button
 
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -238,6 +238,16 @@ const MiniDrawer = props => {
                         >
                             Navigus
                       </Typography>
+                        <Button
+                            startIcon={<ExitToAppIcon />}
+                            onClick={() => {
+                                setShowLogout(true)
+                            }}
+                            color="secondary"
+                            variant="contained"
+                        >
+                            Logout
+                            </Button>
                     </Toolbar>
 
                 </AppBar>

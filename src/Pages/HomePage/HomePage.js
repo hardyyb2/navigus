@@ -10,17 +10,43 @@ import { setTotalClients, getTotalUsers } from '../../store/actions'
 import MiniDrawer from '../../UI/MiniDrawer/MiniDrawer'
 
 const useStyles = makeStyles(theme => ({
+    '@global': {
+        '*::-webkit-scrollbar': {
+            width: '0.4em'
+        },
+        '*::-webkit-scrollbar-track': {
+            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '*::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(255,255,255,.1)',
+            outline: '1px solid slategrey'
+        }
+    },
     root: {
         marginTop: '40px',
         marginRight: '20px',
         padding: '20px',
-        background: '#1f1f2f'
+        maxWidth: '80vw',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    },
+    card: {
+        borderRadius: '2px',
+        margin: '1rem',
+        marginBottom: '3rem',
+        position: 'relative',
+        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
     },
     title: {
         color: '#f5f5f5',
         fontSize: '2.5rem',
         marginBottom: '30px',
-        display: 'block'
+        display: 'block',
+        background: '#1f1f2f'
+    },
+    cardsComponent: {
+        maxWidth: '100%',
+        padding: '20px',
     }
 }))
 
@@ -60,21 +86,27 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
     const toggleHandleLogout = () => {
         setLogout(!logout)
     }
+
+    const cardData = [
+        { title: 'Online Users', totalUsers: totalClients, type: 'online' },
+        { title: 'Total Users', totalUsers: totalUsers, type: 'mixed' },
+        { title: 'Offline Users', totalUsers: offlineUsers, type: 'offline' },
+    ]
+
     return (
         <MiniDrawer>
             <div className={classes.root}>
-                <span className={classes.title}>Online Users</span>
-                <CardsComponent totalUsers={totalClients} type="online" />
-                <CardsComponent totalUsers={totalUsers} type="mixed" />
-                <CardsComponent totalUsers={offlineUsers} type="offline" />
-                <Button onClick={toggleHandleLogout} color="primary"
-                >Logout</Button>
                 {
-                    logout ?
-                        <Logout handleClose={toggleHandleLogout} />
-                        :
-                        null
+                    cardData.map((data, index) =>
+                        <div className={classes.card} key={index}>
+                            <span className={classes.title}>{data.title}</span>
+                            <div className={classes.cardsComponent}>
+                                <CardsComponent totalUsers={data.totalUsers} type={data.type} />
+                            </div>
+                        </div>
+                    )
                 }
+
             </div>
         </MiniDrawer>
     )

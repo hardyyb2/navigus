@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
             filter: 'brightness(80%)',
             transition: 'all 0.2s ease-out'
         },
+    },
+    avatarGroup: {
+        // overflowX: 'auto'
     }
 }));
 
@@ -92,7 +95,7 @@ const StyledBadge = withStyles((theme) => ({
 const CardComponent = ({ getTotalUsers, totalClients, totalUsers, type }) => {
     return totalUsers.length !== 0 ?
         (
-            <div >
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <ChatList clients={totalUsers} type={type} totalClients={totalClients} getTotalUsers={getTotalUsers} />
             </div>
         )
@@ -111,7 +114,7 @@ const ChatList = ({ getTotalUsers, totalClients, clients, type }) => {
     const isOnline = client => totalClients.indexOf(client) !== -1
 
     return (
-        <AvatarGroup max={30}>
+        <AvatarGroup max={30} className={classes.avatarGroup}>
             {
                 clients.map((client, index) =>
                     <LightTooltip arrow title={client} key={index} className={
