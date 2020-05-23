@@ -14,23 +14,30 @@ const usersList = []
 
 io.sockets.on('connection', socket => {
     socket.on('client data', (clientData) => {
+        socket['email'] = clientData.email
         if (usersList.indexOf(clientData.email) === -1) {
-            socket['email'] = clientData.email
             usersList.push(clientData.email)
             io.emit('total online', JSON.stringify(usersList))
         } else {
             socket.emit('multipletabs', 'opened many tabs')
             io.emit('total online', JSON.stringify(usersList))
         }
-
     })
 
     socket.on('disconnect', () => {
-        // var online = Object.keys(io.engine.clients);
         var i = usersList.indexOf(socket.email);
-        usersList.splice(i, 1);
-        io.emit('total online', JSON.stringify(usersList))
-        // console.log(usersList)
+        if (i > -1) {
+            usersList.splice(i, 1);
+            io.emit('total online', JSON.stringify(usersList))
+        }
+    })
+    socket.on('logout', (clientData) => {
+        var i = usersList.indexOf(clientData.email);
+        if (i > -1) {
+            usersList.splice(i, 1);
+            io.emit('total online', JSON.stringify(usersList))
+        }
+
     })
 })
 

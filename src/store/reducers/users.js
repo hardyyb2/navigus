@@ -1,10 +1,14 @@
 import {
     SET_TOTAL_CLIENTS,
-    SET_USER_DETAILS
+    SET_USER_DETAILS,
+    SET_TOTAL_USERS,
+    SET_OFFLINE_USERS,
 } from "../actions/index"
 
 const initialState = {
     totalClients: [],
+    totalUsers: [],
+    offlineUsers: [],
     userDetails: {
         Name: {
             elementType: 'input',
@@ -76,6 +80,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 userDetails: action.userDetails
+            }
+        case SET_TOTAL_USERS:
+            return {
+                ...state,
+                totalUsers: action.users
+            }
+        case SET_OFFLINE_USERS:
+            let offlineUsers = []
+            offlineUsers = state.totalUsers.filter(user => state.totalClients.indexOf(user) === -1)
+            return {
+                ...state,
+                offlineUsers: offlineUsers
             }
 
         default:

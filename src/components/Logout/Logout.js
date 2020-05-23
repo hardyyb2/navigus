@@ -5,6 +5,10 @@ import { Button, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import socketIOClient from 'socket.io-client'
+
+import { setTotalClients, getTotalUsers } from '../../store/actions'
+
 
 import { connect } from 'react-redux'
 
@@ -19,6 +23,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Logout = props => {
+    const endpoint = 'http://localhost:4001'
+    const socket = socketIOClient(endpoint);
     const classes = useStyles()
     return (
         <div style={{ background: '#1f1f2f' }}>
@@ -33,6 +39,10 @@ const Logout = props => {
                 <DialogActions>
                     <Button onClick={() => {
                         props.logout()
+                        let clientData = {
+                            email: props.userEmail
+                        }
+                        socket.emit('logout', clientData)
                     }}
                         color="secondary"
                     >
@@ -48,11 +58,18 @@ const Logout = props => {
 
 }
 
+const mapStateToProps = state => {
+    return {
+        userEmail: state.auth.user.email
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(logoutUser())
+        logout: () => dispatch(logoutUser()),
+        setTotalClients: (totalClients) => dispatch(setTotalClients(totalClients)),
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(Logout)
+export default connect(mapStateToProps, mapDispatchToProps)(Logout)
