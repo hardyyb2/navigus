@@ -10,11 +10,11 @@ import { Grid } from '@material-ui/core';
 
 import Spinner from './UI/Spinner/Spinner'
 
-const HomePage = lazy(() => import('./components/HomePage/HomePage'))
-const Signup = lazy(() => import('./components/Signup/Signup'))
-const Login = lazy(() => import('./components/Login/Login'))
-const LandingPage = lazy(() => import('./components/LandingPage/LandingPage'))
-const NotFoundPage = lazy(() => import('./components/NotFoundPage/NotFoundPage'))
+const HomePage = lazy(() => import('./Pages/HomePage/HomePage'))
+const Signup = lazy(() => import('./Pages/Signup/Signup'))
+const Login = lazy(() => import('./Pages/Login/Login'))
+const LandingPage = lazy(() => import('./Pages/LandingPage/LandingPage'))
+const NotFoundPage = lazy(() => import('./Pages/NotFoundPage/NotFoundPage'))
 
 const LoadingScreen = (
     <Grid container justify="center"

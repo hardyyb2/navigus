@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { signupUser } from "../../store/actions/";
+import { signupUser } from "../../store/actions";
 import { useHistory } from 'react-router-dom'
 
 // import DetailsForm from '../BuyNow/DetailsForm/DetailsForm';
