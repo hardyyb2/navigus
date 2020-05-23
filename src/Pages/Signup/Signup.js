@@ -11,8 +11,8 @@ import { Redirect } from "react-router-dom";
 import { signupUser } from "../../store/actions";
 import { useHistory } from 'react-router-dom'
 
-// import DetailsForm from '../BuyNow/DetailsForm/DetailsForm';
-// import SlideDownAnimation from '../../UI/SlideDownAnimation/SlideDownAnimation'
+import DetailsForm from '../../components/DetailsForm/DetailsForm'
+import SlideDownAnimation from '../../UI/SlideDownAnimation/SlideDownAnimation'
 
 const useStyles = makeStyles({
     root: {
@@ -123,7 +123,32 @@ const SignUp = props => {
                         }}
                     />
                 </Grid>
+                <SlideDownAnimation isVisible={fillDetails}>
+                    <Grid item style={{ margin: '0px 10px 10px 10px', padding: '0px 10px 10px 10px' }}>
+                        <DetailsForm />
+                    </Grid>
+                </SlideDownAnimation>
+                {
+                    fillDetails ?
+                        null
+                        :
 
+                        <Grid item style={{ margin: '10px' }}>
+                            <Button
+                                fullWidth
+                                onClick={
+                                    () => setFillDetails(true)
+                                }
+                                style={{
+                                    color: '#f5f5f5',
+                                }}
+                                startIcon={<ExpandMoreIcon />}
+                            >
+
+                                Fill Address Details
+                            </Button>
+                        </Grid>
+                }
 
                 <Grid item style={{ margin: '10px' }}>
                     <Button
@@ -177,6 +202,7 @@ function mapStateToProps(state) {
         user: state.auth.user,
         signupError: state.auth.signupError,
         signupErrMessage: state.auth.signupErrMessage,
+        userDetails: state.users.userDetails
 
     };
 }

@@ -1,5 +1,6 @@
 
 export const SET_TOTAL_CLIENTS = 'SET_TOTAL_CLIENTS'
+export const SET_USER_DETAILS = 'SET_USER_DETAILS'
 
 
 const setClients = clients => {
