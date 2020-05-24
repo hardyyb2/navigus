@@ -110,13 +110,13 @@ const LandingPage = props => {
     let landing = (
         <Grid container className={classes.root}>
             <Grid item className={classes.title}>
-                ShoppinWay
+                Navigus
         </Grid>
             <Grid item className={classes.subtitle}>
                 The best place to find products for you and your loved ones.
         </Grid>
             <Grid item xs container className={classes.image}>
-                <img src={NavigusImage} alt="shoppin" className={classes.img} />
+                <img src={NavigusImage} alt="navigus" className={classes.img} />
             </Grid>
             <Grid item xs container>
                 <Button
@@ -158,7 +158,7 @@ const LandingPage = props => {
                             minHeight: '10vh',
                             alignItems: 'center'
                         }}>
-                        ShoppInWay
+                        Navigus
                     </AppBar>
                 </Grid>
                 <Grid item xs container direction="row" justify="center"
@@ -205,7 +205,7 @@ const LandingPage = props => {
                                 marginBottom: '20px'
                             }}
                         >
-                            ShoppInWay
+                            Navigus
                         </Grid>
                         <Grid item
                             style={{

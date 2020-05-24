@@ -67,7 +67,7 @@ const Login = props => {
                         () => history.replace('/index')
                     }
                 >
-                    ShoppInWay
+                    Navigus
                 </AppBar>
                 <Grid item style={{ margin: '10px', padding: '10px' }}>
                     <TextField
