@@ -217,7 +217,7 @@ const LandingPage = props => {
 
                             }}
                         >
-                            Your destination to find products for you and your loved ones.
+                            Give wings to your study abroad dream
                         </Grid>
                         <Grid item xs container direction="row" justify="center">
                             <Grid item xs={4} container justify="center" >
