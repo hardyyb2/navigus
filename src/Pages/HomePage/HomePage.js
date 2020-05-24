@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, Button, makeStyles } from '@material-ui/core'
+import { Grid, Button, makeStyles, Select, FormControl, MenuItem, InputLabel } from '@material-ui/core'
 import socketIOClient from 'socket.io-client'
 import { connect } from 'react-redux'
 
@@ -57,6 +57,33 @@ const useStyles = makeStyles(theme => ({
             background: `linear-gradient(90deg, transparent, #444 , transparent)`,
         }
     },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+        width: '40%',
+        color: 'white',
+        marginBottom: '20px'
+    },
+    select: {
+        "& ul": {
+            backgroundColor: "#1f1f2f",
+            color: 'white',
+
+        },
+        "& li": {
+            fontSize: '1.2rem',
+
+        },
+    },
+    input: {
+        color: '#f5f5f5',
+        borderBottom: '2px solid #f5f5f5',
+        outline: 'none'
+    },
+    label: {
+        color: 'rgba(255,255,255,0.8) !important',
+        outline: 'none'
+    },
 }))
 
 const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalClients, getTotalUsers }) => {
@@ -95,9 +122,13 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
     }, [])
 
 
-    const toggleHandleLogout = () => {
-        setLogout(!logout)
+    const [userType, setUserType] = useState('all')
+
+    const handleChange = e => {
+        setUserType(e.target.value)
     }
+
+
 
     const cardData = [
         { title: 'Online Users', totalUsers: totalClients, type: 'online' },
@@ -108,28 +139,59 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
     return (
         <MiniDrawer>
             <div className={classes.root}>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-helper-label" className={classes.label}>Select Users Type</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={userType}
+                        onChange={handleChange}
+                        MenuProps={{ classes: { paper: classes.select } }}
+                        inputProps={{
+                            className: classes.input,
+                        }}
+
+                    >
+                        <MenuItem value={'all'}>All</MenuItem>
+                        <MenuItem value={'online'}>Online</MenuItem>
+                        <MenuItem value={'mixed'}>Total</MenuItem>
+                        <MenuItem value={'offline'}>Offline</MenuItem>
+                    </Select>
+                    {/* <FormHelperText>Some important helper text</FormHelperText> */}
+                </FormControl>
                 {
-                    cardData.map((data, index) =>
-
-
-
-                        <div className={classes.card} key={index}>
-                            <span className={classes.title}>{data.title}</span>
-                            <div className={classes.cardsComponent}>
-                                {
-                                    data.totalUsers.length === 0 ?
-                                        <Spinner />
-                                        :
-                                        <CardsComponent totalUsers={data.totalUsers} type={data.type} />
-                                }
-                            </div>
-                        </div>
-
+                    cardData.map((data, index) => {
+                        if (userType === 'all')
+                            return (<div className={classes.card} key={index}>
+                                <span className={classes.title}>{data.title}</span>
+                                <div className={classes.cardsComponent}>
+                                    {
+                                        data.totalUsers.length === 0 ?
+                                            <Spinner />
+                                            :
+                                            <CardsComponent totalUsers={data.totalUsers} type={data.type} />
+                                    }
+                                </div>
+                            </div>)
+                        else if (userType === data.type) {
+                            return (<div className={classes.card} key={index}>
+                                <span className={classes.title}>{data.title}</span>
+                                <div className={classes.cardsComponent}>
+                                    {
+                                        data.totalUsers.length === 0 ?
+                                            <Spinner />
+                                            :
+                                            <CardsComponent totalUsers={data.totalUsers} type={data.type} />
+                                    }
+                                </div>
+                            </div>)
+                        }
+                    }
                     )
                 }
 
             </div>
-        </MiniDrawer>
+        </MiniDrawer >
     )
 }
 
