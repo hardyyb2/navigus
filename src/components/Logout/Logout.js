@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Logout = props => {
-    const endpoint = 'http://localhost:4001'
+    const endpoint = '/'
     const socket = socketIOClient(endpoint);
     const classes = useStyles()
     return (

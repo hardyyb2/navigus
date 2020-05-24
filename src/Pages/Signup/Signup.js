@@ -145,7 +145,7 @@ const SignUp = props => {
                                 startIcon={<ExpandMoreIcon />}
                             >
 
-                                Fill Address Details
+                                Fill Address Details (not necessary)
                             </Button>
                         </Grid>
                 }

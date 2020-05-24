@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalClients, getTotalUsers }) => {
-    const endpoint = 'http://localhost:4001'
+    const endpoint = '/'
     const color = 'white'
 
     const classes = useStyles()
