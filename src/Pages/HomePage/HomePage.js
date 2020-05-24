@@ -8,6 +8,8 @@ import CardsComponent from '../../components/CardsComponent/CardsComponent'
 
 import { setTotalClients, getTotalUsers } from '../../store/actions'
 import MiniDrawer from '../../UI/MiniDrawer/MiniDrawer'
+import Spinner from '../../UI/Spinner/Spinner'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -49,7 +51,12 @@ const useStyles = makeStyles(theme => ({
     cardsComponent: {
         maxWidth: '100%',
         padding: '20px',
-    }
+    },
+    wave: {
+        '&::after': {
+            background: `linear-gradient(90deg, transparent, #444 , transparent)`,
+        }
+    },
 }))
 
 const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalClients, getTotalUsers }) => {
@@ -103,12 +110,21 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
             <div className={classes.root}>
                 {
                     cardData.map((data, index) =>
+
+
+
                         <div className={classes.card} key={index}>
                             <span className={classes.title}>{data.title}</span>
                             <div className={classes.cardsComponent}>
-                                <CardsComponent totalUsers={data.totalUsers} type={data.type} />
+                                {
+                                    data.totalUsers.length === 0 ?
+                                        <Spinner />
+                                        :
+                                        <CardsComponent totalUsers={data.totalUsers} type={data.type} />
+                                }
                             </div>
                         </div>
+
                     )
                 }
 
