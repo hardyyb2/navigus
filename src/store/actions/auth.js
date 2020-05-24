@@ -88,6 +88,7 @@ const signUpError = (signupErrMessage) => {
     }
 }
 
+//set user details upon signup
 export const setUserDetails = (user, userDetails) => dispatch => {
     db
         .collection('users')
@@ -101,7 +102,6 @@ export const setUserDetails = (user, userDetails) => dispatch => {
         })
 }
 
-//async actions for thunk
 export const loginUser = (email, password) => dispatch => {
     dispatch(requestLogin())
     myFirebase
@@ -111,7 +111,6 @@ export const loginUser = (email, password) => dispatch => {
             dispatch(receiveLogin(user))
         })
         .catch(error => {
-            //Do something with the error if you want!
             dispatch(loginError())
         })
 }
@@ -126,7 +125,6 @@ export const logoutUser = () => dispatch => {
             dispatch(receiveLogout())
         })
         .catch(error => {
-            //Do something with the error if you want!
             dispatch(logoutError())
         })
 }

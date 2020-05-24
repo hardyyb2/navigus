@@ -123,12 +123,15 @@ const SignUp = props => {
                         }}
                     />
                 </Grid>
+                {/*slider component to reveal form on click of button  */}
                 <SlideDownAnimation isVisible={fillDetails}>
                     <Grid item style={{ margin: '0px 10px 10px 10px', padding: '0px 10px 10px 10px' }}>
                         <DetailsForm />
                     </Grid>
                 </SlideDownAnimation>
+
                 {
+                    //fill additional details
                     fillDetails ?
                         null
                         :

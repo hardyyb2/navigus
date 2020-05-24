@@ -33,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "localrun": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"

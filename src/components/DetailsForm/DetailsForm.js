@@ -7,11 +7,11 @@ import FormInput from './FormInput'
 import { connect } from 'react-redux'
 import { SET_USER_DETAILS } from '../../store/actions/index'
 
-const DetailsForm = props => {
+const DetailsForm = ({ userDetails, setUserDetails }) => {
 
     const [formIsValid, setFormIsValid] = useState(false)
 
-
+    //validation using validator and custom validation
     const checkValidation = (value, rules) => {
         let isValid = true
         if (rules.required) {
@@ -32,8 +32,9 @@ const DetailsForm = props => {
         return isValid
     }
 
+    //update form and validation status on onChange event
     const inputChangedHandler = (event, inputIdentifier) => {
-        const updatedForm = { ...props.userDetails }
+        const updatedForm = { ...userDetails }
         const updatedFormElement = { ...updatedForm[inputIdentifier] }
         updatedFormElement.value = event.target.value
         updatedFormElement.valid = checkValidation(
@@ -46,17 +47,16 @@ const DetailsForm = props => {
         for (let key in updatedForm) {
             formIsValid = updatedForm[key].valid && formIsValid
         }
-        props.setUserDetails(updatedForm)
-
+        setUserDetails(updatedForm)
         setFormIsValid(formIsValid)
     }
 
-
+    //make elements array based on userdetails object
     const formElementsArray = []
-    for (let key in props.userDetails) {
+    for (let key in userDetails) {
         formElementsArray.push({
             id: key,
-            config: props.userDetails[key],
+            config: userDetails[key],
             title: key
         })
     }

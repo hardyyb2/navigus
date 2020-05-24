@@ -109,7 +109,6 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
             socket.emit('client data', clientData)
         })
         socket.on('total online', (allUsersEmail) => {
-
             setTotalClients(JSON.parse(allUsersEmail))
             if (totalClients !== allUsersEmail)
                 getTotalUsers()
@@ -117,8 +116,6 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
         socket.on('multipletabs', () => {
             console.log('multiple tabs open')
         })
-
-
     }, [])
 
 
@@ -128,8 +125,7 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
         setUserType(e.target.value)
     }
 
-
-
+    //different types of cards
     const cardData = [
         { title: 'Online Users', totalUsers: totalClients, type: 'online' },
         { title: 'Total Users', totalUsers: totalUsers, type: 'mixed' },
@@ -139,6 +135,7 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
     return (
         <MiniDrawer>
             <div className={classes.root}>
+                {/* Select  type of card to be displayed*/}
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-helper-label" className={classes.label}>Select Users Type</InputLabel>
                     <Select
@@ -157,9 +154,10 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
                         <MenuItem value={'mixed'}>Total</MenuItem>
                         <MenuItem value={'offline'}>Offline</MenuItem>
                     </Select>
-                    {/* <FormHelperText>Some important helper text</FormHelperText> */}
+
                 </FormControl>
                 {
+                    //map card data as component, show spinner till loading
                     cardData.map((data, index) => {
                         if (userType === 'all')
                             return (<div className={classes.card} key={index}>

@@ -41,14 +41,15 @@ export const clearAvatarData = () => {
     }
 }
 
+//set total online users
 export const setTotalClients = clients => dispatch => {
     dispatch(setClients(clients))
     dispatch(setOfflineUsers())
 }
 
+//get total users from database 
 export const getTotalUsers = () => dispatch => {
     let totalUsers = []
-    console.log('runs again')
 
     db
         .collection('users')
@@ -57,7 +58,6 @@ export const getTotalUsers = () => dispatch => {
             snapshot.docs.map(doc => {
                 totalUsers.push(doc.data().email)
             })
-            console.log('this is total users', totalUsers)
             dispatch(setTotalUsers(totalUsers))
             dispatch(setOfflineUsers())
         })
@@ -65,13 +65,13 @@ export const getTotalUsers = () => dispatch => {
 
 }
 
+//get avatar data on avatar click based on email
 export const getAvatarData = clientEmail => dispatch => {
     db
         .collection('users')
         .where('email', '==', clientEmail)
         .get()
         .then(res => {
-            console.log(res.docs[0].data())
             dispatch(setCurrentlyVieweduser(res.docs[0].data()))
         })
         .catch(err => console.log(err))

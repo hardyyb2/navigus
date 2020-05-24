@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
@@ -22,15 +21,17 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-const Logout = props => {
+//confirmation dialog for logout
+const Logout = ({ handleClose, userEmail, logout }) => {
     const endpoint = '/'
     const socket = socketIOClient(endpoint);
     const classes = useStyles()
+
     return (
         <div style={{ background: '#1f1f2f' }}>
             <Dialog
                 open={true}
-                onClose={props.handleClose}
+                onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 classes={{ paper: classes.modal }}
@@ -38,9 +39,9 @@ const Logout = props => {
                 <DialogTitle id="alert-dialog-title">{"Are you sure you want to Logout?"}</DialogTitle>
                 <DialogActions>
                     <Button onClick={() => {
-                        props.logout()
+                        logout()
                         let clientData = {
-                            email: props.userEmail
+                            email: userEmail
                         }
                         socket.emit('logout', clientData)
                     }}
@@ -48,7 +49,7 @@ const Logout = props => {
                     >
                         Logout
             </Button>
-                    <Button onClick={props.handleClose} color="primary" autoFocus>
+                    <Button onClick={handleClose} color="primary" autoFocus>
                         Cancel
             </Button>
                 </DialogActions>

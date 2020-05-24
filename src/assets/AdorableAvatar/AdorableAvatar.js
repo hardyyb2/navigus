@@ -1,3 +1,5 @@
+
+//api link  to get adorable avatars for users
 export function getAdorableAvatar(id, size = 80) {
     return `https://api.adorable.io/avatars/${size}/${id}`;
 }

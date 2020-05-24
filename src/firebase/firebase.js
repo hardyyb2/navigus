@@ -2,6 +2,7 @@ import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 
+//firebase configs, keys in local .env file
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "navigus-f70ca.firebaseapp.com",

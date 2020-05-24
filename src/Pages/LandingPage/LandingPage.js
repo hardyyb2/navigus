@@ -4,7 +4,6 @@ import NavigusImage from '../../assets/images/navigus.jpg'
 import { useHistory, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-// import ShoppingCart from '../../assets/images/shoppingCart.svg'
 
 const useStyles = makeStyles({
     root: {
@@ -104,7 +103,6 @@ const LandingPage = props => {
 
     useEffect(() => {
         if (window.innerWidth >= 1025) {
-            console.log('is greater')
             setIsMobile(false)
         }
     }, [])
