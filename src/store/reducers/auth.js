@@ -22,7 +22,6 @@ const initialState = {
     signupError: false,
     signupErrMessage: '',
     user: {},
-    reset: false
 }
 
 export default (state = initialState, action) => {
