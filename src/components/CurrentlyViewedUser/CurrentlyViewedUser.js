@@ -73,7 +73,7 @@ const useStyles = makeStyles({
 })
 
 
-const CurrentlyViewedModal = ({ currentlyViewedUser }) => {
+const CurrentlyViewedModal = ({ currentlyViewedUser, handleClose }) => {
     const classes = useStyles()
 
     const makeAddress = addressObj => {
@@ -92,6 +92,7 @@ const CurrentlyViewedModal = ({ currentlyViewedUser }) => {
                         variant="contained"
                         color="secondary"
                         startIcon={<CloseIcon />}
+                        onClick={handleClose}
                     >
                         Close
                  </Button>

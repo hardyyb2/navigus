@@ -205,7 +205,10 @@ const ChatList = ({ clearAvatarData, getTotalUsers, getAvatarData, totalClients,
                         setModalOpen(false)
                         clearAvatarData()
                     }}>
-                        <CurrentlyViewedUser />
+                        <CurrentlyViewedUser handleClose={() => {
+                            setModalOpen(false)
+                            clearAvatarData()
+                        }} />
                     </UserModal>
                     : null
 
