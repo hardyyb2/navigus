@@ -3,12 +3,15 @@ import {
     SET_USER_DETAILS,
     SET_TOTAL_USERS,
     SET_OFFLINE_USERS,
+    SET_CURRENTLLY_VIEWED_USER,
+    CLEAR_AVATAR_DATA
 } from "../actions/index"
 
 const initialState = {
     totalClients: [],
     totalUsers: [],
     offlineUsers: [],
+    currentlyViewedUser: null,
     userDetails: {
         Name: {
             elementType: 'input',
@@ -93,7 +96,16 @@ export default (state = initialState, action) => {
                 ...state,
                 offlineUsers: offlineUsers
             }
-
+        case SET_CURRENTLLY_VIEWED_USER:
+            return {
+                ...state,
+                currentlyViewedUser: action.user
+            }
+        case CLEAR_AVATAR_DATA:
+            return {
+                ...state,
+                currentlyViewedUser: null
+            }
         default:
             return state
     }

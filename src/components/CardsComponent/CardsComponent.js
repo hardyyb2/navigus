@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 
 // import AvatarGroup from '@atlaskit/avatar-group'
@@ -9,7 +9,9 @@ import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Badge from '@material-ui/core/Badge';
 
-import { setTotalClients, getTotalUsers } from '../../store/actions'
+import { getAvatarData, getTotalUsers, clearAvatarData } from '../../store/actions'
+import UserModal from '../../UI/Modal/Modal';
+import CurrentlyViewedUser from '../CurrentlyViewedUser/CurrentlyViewedUser';
 
 // import { getTotalUsers } from 
 
@@ -28,19 +30,21 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(10),
         height: theme.spacing(10),
     },
-    brighttooltip: {
+    toolTipAll: {
         cursor: 'pointer',
         borderRadius: '50%',
+        float: 'left'
+
+    },
+    brighttooltip: {
         filter: 'brightness(140%)',
         '&:hover': {
             filter: 'brightness(160%)',
             transition: 'all 0.2s ease-out'
-
         },
+
     },
     dulltooltip: {
-        cursor: 'pointer',
-        borderRadius: '50%',
         filter: 'brightness(40%)',
         '&:hover': {
             filter: 'brightness(80%)',
@@ -48,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     avatarGroup: {
-        // overflowX: 'auto'
+        width: '100%',
+        display: 'inline-block'
     }
 }));
 
@@ -58,6 +63,7 @@ const LightTooltip = withStyles((theme) => ({
         color: 'rgba(0, 0, 0, 0.87)',
         boxShadow: theme.shadows[1],
         fontSize: '0.8rem',
+
     },
 }))(Tooltip);
 
@@ -92,11 +98,14 @@ const StyledBadge = withStyles((theme) => ({
 
 
 
-const CardComponent = ({ getTotalUsers, totalClients, totalUsers, type }) => {
+const CardComponent = ({ clearAvatarData, getTotalUsers, getAvatarData, totalClients, totalUsers, type }) => {
+
     return totalUsers.length !== 0 ?
         (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <ChatList clients={totalUsers} type={type} totalClients={totalClients} getTotalUsers={getTotalUsers} />
+                <ChatList clearAvatarData={clearAvatarData}
+                    clients={totalUsers} type={type} totalClients={totalClients} getTotalUsers={getTotalUsers} getAvatarData={getAvatarData} />
+
             </div>
         )
         :
@@ -105,69 +114,103 @@ const CardComponent = ({ getTotalUsers, totalClients, totalUsers, type }) => {
 
 
 
-const ChatList = ({ getTotalUsers, totalClients, clients, type }) => {
+const ChatList = ({ clearAvatarData, getTotalUsers, getAvatarData, totalClients, clients, type }) => {
     const classes = useStyles()
-    useEffect(() => {
-        // getTotalUsers()
-    }, [totalClients])
+    const [modalOpen, setModalOpen] = useState(false)
+    // useEffect(() => {
+    //     // getTotalUsers()
+    // }, [totalClients])
 
     const isOnline = client => totalClients.indexOf(client) !== -1
 
-    return (
-        <AvatarGroup max={30} className={classes.avatarGroup}>
-            {
-                clients.map((client, index) =>
-                    <LightTooltip arrow title={client} key={index} className={
-                        type === 'online' ?
-                            classes.brighttooltip
-                            :
-                            (
-                                type === 'offline' ? classes.dulltooltip
-                                    :
-                                    isOnline(client) ?
-                                        classes.brighttooltip :
-                                        classes.dulltooltip
-                            )
 
-                    }>
-                        {
-                            type === 'online' ?
-                                <StyledBadge
-                                    overlap="circle"
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    badgeContent=" "
-                                >
-                                    <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large} />
-                                </StyledBadge>
+    return (
+        <>
+            <AvatarGroup max={50} className={classes.avatarGroup}>
+                {
+                    clients.map((client, index) =>
+                        <LightTooltip arrow title={client} key={index} className={
+
+                            `${classes.toolTipAll}  ${type === 'online' ?
+                                classes.brighttooltip
                                 :
                                 (
-                                    type === 'offline' ?
-                                        <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large} />
+                                    type === 'offline' ? classes.dulltooltip
                                         :
                                         isOnline(client) ?
-                                            <StyledBadge
-                                                overlap="circle"
-                                                anchorOrigin={{
-                                                    vertical: 'top',
-                                                    horizontal: 'right',
-                                                }}
-                                                badgeContent=" "
-                                            >
-                                                <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large} />
-                                            </StyledBadge>
-                                            :
-
-                                            <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large} />
-
+                                            classes.brighttooltip :
+                                            classes.dulltooltip
                                 )
-                        }
-                    </LightTooltip>
-                )
+
+                            }`}>
+                            {
+                                type === 'online' ?
+                                    <StyledBadge
+                                        overlap="circle"
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
+                                        badgeContent=" "
+                                    >
+                                        <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large}
+                                            onClick={() => {
+                                                setModalOpen(true)
+                                                getAvatarData(client)
+                                            }}
+                                        />
+                                    </StyledBadge>
+                                    :
+                                    (
+                                        type === 'offline' ?
+                                            <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large}
+                                                onClick={() => {
+                                                    setModalOpen(true)
+                                                    getAvatarData(client)
+                                                }} />
+                                            :
+                                            isOnline(client) ?
+                                                <StyledBadge
+                                                    overlap="circle"
+                                                    anchorOrigin={{
+                                                        vertical: 'top',
+                                                        horizontal: 'right',
+                                                    }}
+                                                    badgeContent=" "
+                                                >
+                                                    <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large}
+                                                        onClick={() => {
+                                                            setModalOpen(true)
+                                                            getAvatarData(client)
+                                                        }} />
+                                                </StyledBadge>
+                                                :
+
+                                                <Avatar alt={client} src={getAdorableAvatar(client)} className={classes.large}
+                                                    onClick={() => {
+                                                        setModalOpen(true)
+                                                        getAvatarData(client)
+                                                    }}
+                                                />
+
+                                    )
+                            }
+                        </LightTooltip>
+                    )
+                }
+            </AvatarGroup>
+            {
+                modalOpen ?
+                    <UserModal handleClose={() => {
+                        setModalOpen(false)
+                        clearAvatarData()
+                    }}>
+                        <CurrentlyViewedUser />
+                    </UserModal>
+                    : null
+
             }
-        </AvatarGroup>
+        </>
     )
 }
 
@@ -180,7 +223,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getTotalUsers: () => dispatch(getTotalUsers())
+        getTotalUsers: () => dispatch(getTotalUsers()),
+        getAvatarData: (clientEmail) => dispatch(getAvatarData(clientEmail)),
+        clearAvatarData: () => dispatch(clearAvatarData())
     }
 }
 

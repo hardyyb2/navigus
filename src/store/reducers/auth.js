@@ -21,7 +21,8 @@ const initialState = {
     isAuthenticated: false,
     signupError: false,
     signupErrMessage: '',
-    user: {}
+    user: {},
+    reset: false
 }
 
 export default (state = initialState, action) => {
@@ -91,7 +92,6 @@ export default (state = initialState, action) => {
                 isAuthenticated: true,
                 isLoggingIn: false,
                 user: action.user,
-
             }
         }
         case SIGNUP_ERROR: {

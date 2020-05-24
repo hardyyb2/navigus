@@ -98,7 +98,6 @@ export const setUserDetails = (user, userDetails) => dispatch => {
         })
         .catch(err => {
             dispatch(signUpError())
-            console.log('culd not put in db')
         })
 }
 
@@ -110,7 +109,6 @@ export const loginUser = (email, password) => dispatch => {
         .signInWithEmailAndPassword(email, password)
         .then(user => {
             dispatch(receiveLogin(user))
-            localStorage.setItem('useruid', JSON.stringify(user.uid))
         })
         .catch(error => {
             //Do something with the error if you want!
@@ -125,8 +123,6 @@ export const logoutUser = () => dispatch => {
         .auth()
         .signOut()
         .then(() => {
-            localStorage.removeItem('useruid')
-            localStorage.removeItem('persist:products')
             dispatch(receiveLogout())
         })
         .catch(error => {
@@ -142,7 +138,6 @@ export const verifyAuth = () => dispatch => {
         .onAuthStateChanged(user => {
             if (user !== null) {
                 dispatch(receiveLogin(user))
-                localStorage.setItem('useruid', JSON.stringify(user.uid))
             }
             dispatch(verifySuccess())
 
@@ -157,7 +152,6 @@ export const signupUser = (email, password, userDetails) => dispatch => {
         .createUserWithEmailAndPassword(email, password)
         .then(user => {
             dispatch(setUserDetails(user, userDetails))
-            localStorage.setItem('useruid', JSON.stringify(user.uid))
         })
         .catch(err => {
             dispatch(signUpError(err.message))

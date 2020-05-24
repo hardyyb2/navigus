@@ -42,7 +42,9 @@ const useStyles = makeStyles(theme => ({
         fontSize: '2.5rem',
         marginBottom: '30px',
         display: 'block',
-        background: '#1f1f2f'
+        background: '#1f1f2f',
+        padding: '12px',
+        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
     },
     cardsComponent: {
         maxWidth: '100%',
@@ -73,12 +75,15 @@ const HomePage = ({ userEmail, totalClients, totalUsers, offlineUsers, setTotalC
             socket.emit('client data', clientData)
         })
         socket.on('total online', (allUsersEmail) => {
+
             setTotalClients(JSON.parse(allUsersEmail))
-            getTotalUsers()
+            if (totalClients !== allUsersEmail)
+                getTotalUsers()
         })
         socket.on('multipletabs', () => {
             console.log('multiple tabs open')
         })
+
 
     }, [])
 
