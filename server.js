@@ -41,7 +41,7 @@ io.sockets.on('connection', socket => {
         }
     })
     socket.on('logout', (clientData) => {
-        var i = usersList.indexOf(clientData.email);
+        var i = usersList.indexOf(clientData.email)
         if (i > -1) {
             usersList.splice(i, 1);
             io.emit('total online', JSON.stringify(usersList))
